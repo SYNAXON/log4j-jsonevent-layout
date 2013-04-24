@@ -98,12 +98,16 @@ public class JSONEventLayout extends Layout {
             builder.add("ndc", "");
         }
         builder.add("level", loggingEvent.getLevel().toString());
-        builder.add("exception", encodeException(loggingEvent));
+        encodeException(loggingEvent, builder);
         return builder;
     }
 
-    protected JsonObjectBuilder encodeException(LoggingEvent loggingEvent) {
-        JsonObjectBuilder builder = BUILDER.createObjectBuilder();
+    /**
+     *
+     * @param loggingEvent the log4j event
+     * @param builder the builder to append
+     */
+    protected void encodeException(LoggingEvent loggingEvent, JsonObjectBuilder builder) {
         if (loggingEvent.getThrowableInformation() != null) {
             final ThrowableInformation throwableInformation = loggingEvent.getThrowableInformation();
             final Throwable throwable = throwableInformation.getThrowable();
@@ -124,7 +128,6 @@ public class JSONEventLayout extends Layout {
                 builder.add("stacktrace", stackTrace.toString());
             }
         }
-        return builder;
     }
 
     /**

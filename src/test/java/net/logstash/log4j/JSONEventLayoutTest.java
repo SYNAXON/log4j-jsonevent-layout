@@ -121,16 +121,15 @@ public class JSONEventLayoutTest {
         String message = appender.getMessages()[0];
         JsonObject jsonObject = createObject(message);
         JsonObject atFields = jsonObject.getJsonObject("@fields");
-        JsonObject exceptionInformation = atFields.getJsonObject("exception");
 
         Assert.assertEquals(
                 "Exception class missing",
                 "java.lang.IllegalArgumentException",
-                exceptionInformation.getString("exception_class"));
+                atFields.getString("exception_class"));
         Assert.assertEquals(
                 "Exception exception message",
                 exceptionMessage,
-                exceptionInformation.getString("exception_message"));
+                atFields.getString("exception_message"));
     }
 
     /**
